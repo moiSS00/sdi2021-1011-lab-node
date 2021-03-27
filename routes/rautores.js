@@ -1,8 +1,38 @@
 module.exports = function(app, swig) {
 
     app.get("/autores/agregar", function(req, res) {
-        var roles = ["Cantante","Batería","Guitarrista","Bajista","Teclista"];
+        var roles = ["cantante","batería","guitarrista","bajista","teclista"];
         let respuesta = swig.renderFile('views/autores-agregar.html', { roles: roles});
+        res.send(respuesta);
+    });
+
+    app.get("/autores/filtrar/:rol", function(req, res) {
+
+        let autores = [ {
+            "nombre" : "Autor 1",
+            "grupo" : "Grupo 1",
+            "rol" : "guitarrista"
+        }, {
+            "nombre" : "Autor 2",
+            "grupo" : "Grupo 2",
+            "rol" : "bajista"
+        }, {
+            "nombre" : "Autor 3",
+            "grupo" : "Grupo 3",
+            "rol" : "guitarrista"
+        }]
+
+        let rol = req.params.rol;
+        let respuesta = "";
+
+        for(let i = 0; i < autores.length; i++) {
+            if(autores[i].rol == rol) {
+                respuesta += "Nombre: " + autores[i].nombre
+                    + " - Grupo: " + autores[i].grupo
+                    + " Rol: " + autores[i].rol + "<br>";
+            }
+        }
+
         res.send(respuesta);
     });
 
@@ -38,15 +68,15 @@ module.exports = function(app, swig) {
         let autores = [ {
             "nombre" : "Autor 1",
             "grupo" : "Grupo 1",
-            "rol" : "Guitarrista"
+            "rol" : "guitarrista"
         }, {
             "nombre" : "Autor 2",
             "grupo" : "Grupo 2",
-            "rol" : "Bajista"
+            "rol" : "bajista"
         }, {
             "nombre" : "Autor 3",
             "grupo" : "Grupo 3",
-            "rol" : "Guitarrista"
+            "rol" : "guitarrista"
         }]
 
         let respuesta = swig.renderFile('views/autores.html', {
