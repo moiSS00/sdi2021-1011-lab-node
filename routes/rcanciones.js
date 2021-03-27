@@ -1,9 +1,7 @@
 module.exports = function(app, swig) {
 
     app.get('/canciones/agregar', function (req, res) {
-        let respuesta = swig.renderFile('views/bagregar.html', {
-
-        });
+        let respuesta = swig.renderFile('views/bagregar.html', {});
         res.send(respuesta);
     })
 
