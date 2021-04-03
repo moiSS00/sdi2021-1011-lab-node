@@ -26,7 +26,7 @@ module.exports = function(app, swig) {
         let respuesta = "";
 
         for(let i = 0; i < autores.length; i++) {
-            if(autores[i].rol == rol) {
+            if(autores[i].rol === rol) {
                 respuesta += "Nombre: " + autores[i].nombre
                     + " - Grupo: " + autores[i].grupo
                     + " Rol: " + autores[i].rol + "<br>";
