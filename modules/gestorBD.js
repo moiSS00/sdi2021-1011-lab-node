@@ -123,5 +123,22 @@ module.exports = {
                 });
             }
         });
+    },
+    borrarComentarios : function(criterio,funcionCallback){
+        this.mongo.MongoClient.connect(this.app.get('db'), function(err, db) {
+            if (err) {
+                funcionCallback(null);
+            } else {
+                let collection = db.collection('comentarios');
+                collection.remove(criterio, function (err,obj) {
+                    if(err) {
+                        funcionCallback(null);
+                    } else {
+                        funcionCallback(obj.result.n);
+                    }
+                    db.close;
+                });
+            }
+        });
     }
 };

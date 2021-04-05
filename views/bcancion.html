@@ -33,6 +33,7 @@
 				 <h4 class="media-heading">{{ comentario.autor }}</h4>
 				 {{ comentario.texto }}
 			 </div>
+			 <a href="/comentario/borrar/{{ comentario._id.toString() }}">Borrar</a>
 		 </div>
 		 {% endfor %}
 	 </div>

@@ -55,6 +55,24 @@ routerAudios.use(function(req, res, next) {
 //Aplicar routerAudios
 app.use("/audios/",routerAudios);
 
+// routerComentarios
+var routerComentarios = express.Router();
+routerComentarios.use(function(req, res, next) {
+    console.log("routerComentarios");
+    let path = require('path');
+    let idComentario = path.basename(req.originalUrl);
+    gestorBD.obtenerComentarios(
+        {"_id": mongo.ObjectID(idComentario) }, function (comentarios) {
+            if(req.session.usuario && comentarios[0].autor == req.session.usuario ){
+                next();
+            } else {
+                res.send("No puede borrar un comentario que no es de su propiedad.");
+            }
+        });
+});
+//Aplicar routerComentarios
+app.use("/comentario/borrar/",routerComentarios);
+
 app.use(express.static('public'));
 
 
