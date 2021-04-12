@@ -124,12 +124,40 @@ module.exports = function(app, swig, gestorBD) {
                     if (comentarios == null) {
                         res.send("Error al recuperar los comentarios.");
                     } else {
-                        let respuesta = swig.renderFile('views/bcancion.html',
-                            {
-                                cancion : canciones[0],
-                                comentarios : comentarios
-                            });
-                        res.send(respuesta);
+
+                        // Recogemos la canción
+                        cancion = canciones[0];
+                        compra = true;
+
+                        // Comprobamos si el usuario actual es el autor
+                        if(req.session.usuario && canciones[0].autor == req.session.usuario ){
+                            compra = false;
+                        }
+
+                        console.log("Se compra después de la comprobación de autoria " + compra)
+
+                        // Comprobamos si el usuario actual ya ha comprado la cancion
+                        let criterioAux = {
+                            "usuario" : req.session.usuario,
+                            "cancionId" : gestorBD.mongo.ObjectID(req.params.id)
+                        };
+
+                        gestorBD.obtenerCompras(criterioAux ,function(compras){
+                            if (compras != null && compras.length > 0 ){
+                                compra = false;
+                            }
+                            console.log("Se compra después de la comprobación de compra " + compra)
+
+                            // Enviamos la respuesta
+                            let respuesta = swig.renderFile('views/bcancion.html',
+                                {
+                                    cancion : canciones[0],
+                                    comentarios : comentarios,
+                                    compra: compra
+                                });
+                            res.send(respuesta);
+
+                        });
                     }
                 });
             }
