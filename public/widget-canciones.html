@@ -6,11 +6,9 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th>Nombre</th>
             <th><a onclick="ordenarPorNombre()">Nombre</a></th>
-            <th>Genero</th>
+            <th><a onclick="ordenarPorGenero()">Genero</a></th>
             <th><a onclick="ordenarPorPrecio()">Precio</a></th>
-            <th>Precio</th>
             <th class="col-md-1"></th>
         </tr>
         </thead>
@@ -98,6 +96,8 @@
         actualizarTabla(cancionesFiltradas);
     });
 
+
+    // Ordenamos por precio
     var precioDsc = true;
     function ordenarPorPrecio(){
         if (precioDsc){
@@ -113,14 +113,44 @@
         precioDsc = !precioDsc; //invertir
     }
 
-
+    // Ordenamos por nombre
+    var nombreDsc = true;
     function ordenarPorNombre(){
-        canciones.sort(function(a, b) {
-            if(a.nombre > b.nombre ) return 1;
-            if(a.nombre < b.nombre ) return -1;
-            return 0;
-        });
+        if(nombreDsc) {
+            canciones.sort(function(a, b) {
+                if(a.nombre > b.nombre ) return 1;
+                if(a.nombre < b.nombre ) return -1;
+                return 0;
+            });
+        } else {
+            canciones.sort(function(a, b) {
+                if(a.nombre > b.nombre ) return -1;
+                if(a.nombre < b.nombre ) return 1;
+                return 0;
+            });
+        }
         actualizarTabla(canciones);
+        nombreDsc = ! nombreDsc;
+    }
+
+    // Ordenamos por genero
+    var generoDsc = true;
+    function ordenarPorGenero(){
+        if(generoDsc) {
+            canciones.sort(function(a, b) {
+                if(a.genero > b.genero ) return 1;
+                if(a.genero < b.genero ) return -1;
+                return 0;
+            });
+        } else {
+            canciones.sort(function(a, b) {
+                if(a.genero > b.genero ) return -1;
+                if(a.genero < b.genero ) return 1;
+                return 0;
+            });
+        }
+        actualizarTabla(canciones);
+        generoDsc = ! generoDsc;
     }
 
 </script>
